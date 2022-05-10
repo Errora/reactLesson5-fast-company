@@ -12,18 +12,30 @@ const TableHeader = ({ onSort, selectedSort, columns }) => {
       onSort({ path: item, order: "asc" });
     }
   };
+
+  const sortIcon = (item) => {
+    if (selectedSort.path && selectedSort.path === item && selectedSort.order === "asc") {
+      return (<i className = "bi bi-caret-up-fill"></i>);
+    } else if (selectedSort.path && selectedSort.path === item && selectedSort.order === "desc") {
+      return (<i className = "bi bi-caret-down-fill"></i>);
+    }
+  };
+
   return <thead>
     <tr>
       {Object.keys(columns).map((column) => (
         <th
-          key={column} onClick={
+          key={column}
+          onClick={
             columns[column].path
               ? () => handleSort(columns[column].path)
               : undefined
           }
           {...{ role: columns[column].path && "button" }}
           scope="col"
-        >{columns[column].name}</th>
+        >{columns[column].name}
+          {sortIcon(columns[column].path)}
+        </th>
       ))}
     </tr>
   </thead>;
